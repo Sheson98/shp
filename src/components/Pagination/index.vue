@@ -25,6 +25,22 @@
     computed:{
         totalPage(){
           return  Math.ceil(this.total/this.pageSize)
+        },
+        startNumAndEdnNum(){
+          const {continues,pageNo,totalPage} = this
+          let start = 0,end = 0;
+          if(this.continues>this.totalPage){
+            start = 1;
+            end = this.totalPage;
+          }else{  
+            start = this.pageNo - parseInt(continues/2)
+            end =  this.pageNo + parseInt(continues/2)
+            if(start< 1){
+                start = 1
+                end = continues
+            }
+            return {start,end}
+          }
         }
     }
   }
