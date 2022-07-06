@@ -69,7 +69,6 @@ export default {
         },50)
         ,leaveIndex(index){
             this.curIndex = -1;
-            
         },
         changeShow(handler){
             if(this.$route.path == '/search'){
@@ -88,14 +87,15 @@ export default {
             const categoryName = categoryname1||categoryname2||categoryname3
             const categoryId = categoryid1||categoryid2||categoryid3
             if(categoryName&&categoryId){
-                this.$router.replace({name:"search",query:{categoryName,categoryId}})
+                this.$router.push({name:"search",query:{categoryName,categoryId}})
+                debugger
             }
         }
     },
     computed:{
         ...mapState({
             categoryList:(state)=>{
-                return state.categoryList
+                return state.home.categoryList
             }
         })
     }
@@ -104,7 +104,7 @@ export default {
 
 <style  lang="less" scoped>
     .cur{
-                            background-color: rgba(247, 0, 0, 0.144);
+            background-color: rgba(247, 0, 0, 0.144);
           }
 .type-nav {
         border-bottom: 2px solid #e1251b;

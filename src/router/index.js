@@ -11,8 +11,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    component: Home,
-    redirect :'home'
+    redirect: '/home'
   },
   {
     path: '/home',
@@ -28,7 +27,7 @@ const routes = [
     component: Register
   },
   {
-    path: '/search',
+    path: '/search/:keyword?',
     component: Search,
     name:"search"
   }

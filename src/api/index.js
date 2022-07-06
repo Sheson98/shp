@@ -20,3 +20,10 @@ export const reqFloorList = ()=>{
         method:'get'
     })
 }
+export const reqGetSearchInfo = (params)=>{
+  return  request({
+        url:'api/list',
+        method:'post',
+        data:params
+    })
+}

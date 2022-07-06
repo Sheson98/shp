@@ -119,7 +119,7 @@ export default {
   computed:{
         ...mapState({
             bannerList:(state)=>{
-                return state.bannerList
+                return state.home.bannerList
             }
         })
     },

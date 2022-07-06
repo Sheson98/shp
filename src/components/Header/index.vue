@@ -46,14 +46,19 @@ export default {
     name:'Header',
     data(){
         return{
-            keyword:this.$route.query.categoryName
+            keyword:''
         }
     },
     methods:{
         goSearch(){
             //this.$router.push('/search/'+this.keyword+'?v='+998)
-            this.$router.push({name:"search",params:{keyword:this.keyword},query:{k:998}},()=>{},()=>{})
+            this.$router.push({name:"search",query:this.$route.query ,  params:{keyword:this.keyword}},()=>{},()=>{})
         }
+    },
+    mounted(){
+        this.$bus.$on('clear',()=>{
+            this.keyword = ""
+        })
     }
 }
 </script>
