@@ -1,41 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/pages/Home'
-import Login from '@/pages/Login'
-import Register from '@/pages/Register'
-import Search from '@/pages/Search'
+import routers from './routers'
 
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    redirect: '/home'
-  },
-  {
-    path: '/home',
-    component: Home,
-  },
-  
-  {
-    path: '/login',
-    component: Login
-  },
-  {
-    path: '/register',
-    component: Register
-  },
-  {
-    path: '/search/:keyword?',
-    component: Search,
-    name:"search"
-  }
-]
+const routes = routers
 
 const router = new VueRouter({
   mode:'history',
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // `to` 和 `from` 都是路由地址
+    // `savedPosition` 可以为空，如果没有的话。
+    return { y: 0 }
+  }
 })
 
 export default router

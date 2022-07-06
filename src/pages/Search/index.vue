@@ -57,7 +57,7 @@
               <li class="yui3-u-1-5" v-for="(item,index) in listData" :key="item.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"><img :src="item.defaultImg" /></a>
+                    <a href="item.html" target="_blank"><router-link :to="`/details/${searchParams.categoryId}`"><img :src="item.defaultImg" /></router-link></a>
                   </div>
                   <div class="price">
                     <strong>
@@ -80,7 +80,7 @@
               
             </ul>
           </div>
-          <Pagination></Pagination>
+          <Pagination :pageNo="searchParams.pageNo" :pageSize="searchParams.pageSize" :total="total"  :continues="5" @getPageNo="getPageNo"></Pagination>
         </div>
       </div>
     </div>
@@ -89,8 +89,8 @@
 
 <script>
   import SearchSelector from './SearchSelector/SearchSelector'
-  import { mapGetters } from 'vuex'
-import Pagination from '../../components/Pagination/index.vue'
+  import { mapGetters,mapState } from 'vuex'
+import Pagination from '@/components/Pagination/index.vue'
   export default {
     name: 'Search',
     data(){
@@ -125,7 +125,10 @@ import Pagination from '../../components/Pagination/index.vue'
       },
       isShowDesc(){
          return   this.searchParams.order.indexOf('desc')!=-1 
-      }
+      },
+      ...mapState({
+        total:state=> state.search.searchInfo.total
+      })
     },
     watch:{
       $route:{
@@ -178,6 +181,11 @@ import Pagination from '../../components/Pagination/index.vue'
         const orderType = this.searchParams.order.split(":")[1];
         //组装order排序
         this.searchParams.order = `${flag}:${orderType=="desc"?"asc":"desc"}`;
+        this.getData()
+      },
+      getPageNo(pageNo){
+        debugger
+        this.searchParams.pageNo = pageNo;
         this.getData()
       }
       

@@ -1,20 +1,18 @@
 <template>
   <div class="pagination">
-        <button>上一页</button>
-    <button>1</button>
+        <button :disabled="pageNo ==1" @click="$emit('getPageNo',pageNo - 1)">上一页</button>
+    <button  @click="$emit('getPageNo', 1)">1</button>
     <button>···</button>
 
-    <button>3</button>
-    <button>4</button>
-    <button>5</button>
-    <button>6</button>
-    <button>7</button>
+
+    <button  v-for="(page,index) in startNumAndEdnNum.end" :key="index"  v-if="page>= startNumAndEdnNum.start"  :class="{active:pageNo==page}"    @click="$emit('getPageNo',page+1)">{{page+1}}</button>
+
     
     <button>···</button>
-    <button>{{totalPage}}</button>
-    <button>上一页</button>
+    <button @click="$emit('getPageNo',totalPage )">{{totalPage}}</button>
+    <button @click="$emit('getPageNo',pageNo +1)" :disabled="pageNo ==totalPage">下一页</button>
     
-    <button style="margin-left: 30px">共 {{total}} 条</button>
+    <button style="margin-left: 30px"  :class="{active:pageNo==total}" >共 {{total}} 条</button>
   </div>
 </template>
 
@@ -29,16 +27,21 @@
         startNumAndEdnNum(){
           const {continues,pageNo,totalPage} = this
           let start = 0,end = 0;
-          if(this.continues>this.totalPage){
+          if(continues>totalPage){
             start = 1;
-            end = this.totalPage;
+            end = totalPage;
           }else{  
-            start = this.pageNo - parseInt(continues/2)
-            end =  this.pageNo + parseInt(continues/2)
+            start = pageNo - parseInt(continues/2)
+            end =  pageNo + parseInt(continues/2)
             if(start< 1){
                 start = 1
                 end = continues
             }
+            if(end > totalPage){
+              end = totalPage
+              start = totalPage - continues +1
+            }
+  
             return {start,end}
           }
         }
@@ -78,5 +81,8 @@
         color: #fff;
       }
     }
+  }
+  .active{
+    background-color: skyblue;
   }
 </style>
